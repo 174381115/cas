@@ -5,7 +5,6 @@ import org.apereo.cas.config.CasConsentCoreConfiguration;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.TestPropertySource;
 
 /**
@@ -23,5 +22,4 @@ import org.springframework.test.context.TestPropertySource;
     "cas.consent.json.location=classpath:/ConsentRepository.json"
 })
 public class JsonConsentRepositoryTests extends BaseConsentRepositoryTests {
-    private static final ClassPathResource JSON_FILE = new ClassPathResource("ConsentRepository.json");
 }
