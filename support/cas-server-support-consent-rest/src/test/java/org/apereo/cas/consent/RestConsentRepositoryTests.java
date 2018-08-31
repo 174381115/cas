@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.*;
 import static org.springframework.test.web.client.ExpectedCount.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
@@ -60,10 +61,10 @@ public class RestConsentRepositoryTests extends BaseConsentRepositoryTests {
         server.expect(manyTimes(), requestTo("/consent"))
             .andExpect(method(HttpMethod.POST))
             .andRespond(withSuccess(body, MediaType.APPLICATION_JSON));
-        server.expect(manyTimes(), requestTo("/consent"))
-            .andExpect(method(HttpMethod.GET))
+        val exp = server.expect(manyTimes(), requestTo("/consent"));
+        assertNotNull(exp);
+        exp.andExpect(method(HttpMethod.GET))
             .andRespond(withServerError());
-
         super.verifyConsentDecisionIsNotFound();
         server.verify();
     }
@@ -91,8 +92,9 @@ public class RestConsentRepositoryTests extends BaseConsentRepositoryTests {
         server.expect(once(), requestTo("/consent/100"))
             .andExpect(method(HttpMethod.DELETE))
             .andRespond(withSuccess());
-        server.expect(once(), requestTo("/consent"))
-            .andExpect(method(HttpMethod.GET))
+        val exp = server.expect(once(), requestTo("/consent"));
+        assertNotNull(exp);
+        exp.andExpect(method(HttpMethod.GET))
             .andRespond(withServerError());
 
         super.verifyConsentDecisionIsFound();
